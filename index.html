@@ -6,331 +6,7 @@
     <title>Виртуальный тур по школе</title>
     <!-- Подключение шрифта Montserrat -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Montserrat', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #F0F4F8; /* Светло-серый фон */
-            color: #333333;
-            line-height: 1.6;
-            scroll-behavior: smooth; /* Плавная прокрутка */
-            opacity: 0; /* Начальная прозрачность для эффекта появления */
-            animation: fadeIn 1s forwards; /* Анимация появления для всего body */
-        }
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        /* Стиль заголовка с фоном */
-        header {
-            background-image: url('school-background.jpg'); /* Фоновое изображение */
-            background-size: cover;
-            background-position: center;
-            color: white;
-            padding: 150px 20px; /* Уменьшенный отступ для мобильных устройств */
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            opacity: 0; /* Начальная прозрачность для эффекта появления */
-            animation: fadeIn 1s 0.5s forwards; /* Анимация появления с задержкой */
-        }
-        header h1 {
-            font-size: 2.5em; /* Меньший заголовок для мобильных устройств */
-            font-weight: 700;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Лёгкая тень для текста */
-        }
-
-        /* Стили навигации */
-        nav {
-            background-color: #007BFF; /* Яркий синий цвет */
-            color: white;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            padding: 10px 0;
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            opacity: 0; /* Начальная прозрачность для эффекта появления */
-            animation: fadeIn 1s 1s forwards; /* Анимация появления с задержкой */
-        }
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin: 0 10px;
-            font-size: 1em; /* Уменьшенный размер шрифта для мобильных устройств */
-            padding: 10px;
-            border-radius: 5px;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            display: inline-block;
-        }
-        nav a:hover {
-            background-color: #0056b3; /* Более тёмный синий при наведении */
-            transform: scale(1.05); /* Лёгкое увеличение при наведении */
-        }
-        .container {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: white;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Тень для блока */
-            border-radius: 10px; /* Закругление углов */
-            opacity: 0; /* Начальная прозрачность для эффекта появления */
-            animation: fadeIn 1s 1.5s forwards; /* Анимация появления с задержкой */
-        }
-        h2 {
-            text-align: center;
-            margin-bottom: 20px;
-            font-weight: 500;
-            color: #007BFF; /* Основной синий цвет */
-        }
-        
-        /* Стиль приветственной секции */
-        .welcome {
-            text-align: center;
-            margin-bottom: 50px;
-            opacity: 0; /* Начальная прозрачность для эффекта появления */
-            animation: fadeIn 1s 2s forwards; /* Анимация появления с задержкой */
-        }
-        .welcome p {
-            font-size: 1.1em; /* Уменьшенный размер шрифта для мобильных устройств */
-            max-width: 90%;
-            margin: 0 auto;
-            color: #555555; /* Темно-серый текст */
-        }
-
-        /* Секции этажей */
-        .floor-section {
-            margin-bottom: 50px;
-            padding: 20px;
-            background-color: #F7F9FC; /* Лёгкий светлый фон */
-            border-radius: 10px;
-            opacity: 0; /* Начальная прозрачность для эффекта появления */
-            animation: fadeIn 1s 2.5s forwards; /* Анимация появления с задержкой */
-        }
-        .classroom {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 40px;
-        }
-        .classroom img {
-            max-width: 30%;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Лёгкая тень */
-            transition: transform 0.3s ease;
-        }
-        .classroom img:hover {
-            transform: scale(1.05); /* Увеличение картинки при наведении */
-        }
-        .classroom-description {
-            text-align: center;
-            padding: 20px;
-        }
-        .classroom-description h3 {
-            color: #007BFF; /* Цвет заголовка класса */
-            font-weight: 600;
-        }
-        
-        /* Модальное окно */
-        .modal {
-            display: none; /* Скрыто по умолчанию */
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.9); /* Темный фон */
-        }
-
-        .modal-content {
-            margin: auto;
-            display: block;
-            width: 43%;
-        }
-
-        .close {
-            position: absolute;
-            top: 15px;
-            right: 35px;
-            color: #fff;
-            font-size: 40px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        /* Кнопки навигации */
-        .modal-navigation {
-            position: absolute;
-            top: 50%;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .prev, .next {
-            cursor: pointer;
-            color: white;
-            font-size: 40px;
-            font-weight: bold;
-            padding: 10px;
-            border: none;
-            background-color: transparent;
-            user-select: none;
-        }
-
-        .prev:hover, .next:hover {
-            color: #f1f1f1;
-        }
-
-
-        /* Стиль для элементов с изображением справа */
-        .classroom.image-right {
-            flex-direction: row;
-        }
-        .classroom.image-right img {
-            margin-left: 20px;
-        }
-        .classroom.image-right .classroom-description {
-            text-align: left;
-            margin-right: 20px;
-        }
-
-        /* Стиль для элементов с изображением слева */
-        .classroom.image-left {
-            flex-direction: row-reverse;
-        }
-        .classroom.image-left img {
-            margin-right: 20px;
-        }
-        .classroom.image-left .classroom-description {
-            text-align: right;
-            margin-left: 20px;
-        }
-
-        /* Секция Призыв к действию */
-        .cta {
-            text-align: center;
-            margin: 50px 0;
-            opacity: 0; /* Начальная прозрачность для эффекта появления */
-            animation: fadeIn 1s 3s forwards; /* Анимация появления с задержкой */
-        }
-        .cta h2 {
-            margin-bottom: 20px;
-            font-weight: 500;
-            color: #007BFF;
-        }
-        .cta p {
-            font-size: 1.1em; /* Уменьшенный размер шрифта для мобильных устройств */
-            margin-bottom: 20px;
-            color: #555555;
-        }
-        .cta button {
-            background-color: #007BFF;
-            color: white;
-            padding: 12px 20px; /* Уменьшенная высота и ширина кнопки для мобильных устройств */
-            border: none;
-            border-radius: 5px;
-            font-size: 1em; /* Уменьшенный размер шрифта для мобильных устройств */
-            cursor: pointer;
-            font-weight: 600;
-            transition: background-color 0.3s ease, transform 0.3s ease; /* Анимация пульсации */
-            animation: pulsate 1.5s infinite;
-            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4);
-        }
-        .cta button:hover {
-            background-color: #0056b3;
-        }
-        @keyframes pulsate {
-            0% {
-                transform: scale(1);
-                opacity: 1;
-            }
-            50% {
-                transform: scale(1.1);
-                opacity: 0.8;
-            }
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
-        /* Плавная прокрутка */
-        html {
-            scroll-behavior: smooth;
-        }
-
-        /* Нижняя сноска */
-        footer {
-            background-color: #003366;
-            color: white;
-            text-align: center;
-            padding: 20px 10px; /* Уменьшенный отступ для мобильных устройств */
-            margin-top: 40px;
-            opacity: 0; /* Начальная прозрачность для эффекта появления */
-            animation: fadeIn 1s 3.5s forwards; /* Анимация появления с задержкой */
-        }
-        footer p {
-            margin: 0;
-            font-size: 1em;
-        }
-
-        /* Мобильная оптимизация */
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 2em;
-                padding: 100px 10px; /* Меньший отступ */
-            }
-            nav a {
-                margin: 0 0;
-                font-size: 1em; /* Уменьшенный размер шрифта */
-                padding: 0;
-            }
-            .welcome p {
-                font-size: 1em; /* Уменьшенный размер шрифта */
-            }
-            .cta p {
-                font-size: 1em; /* Уменьшенный размер шрифта */
-            }
-            .classroom img {
-                max-width: 40%; /* Изменение на 40% для мобильных устройств */
-            }
-            .modal-content {
-            margin: auto;
-            display: block;
-            width: 100%;
-            padding-top: 20%
-            }
-        }
-        @media (max-width: 480px) {
-            header h1 {
-                font-size: 1.5em;
-                padding: 80px 5px; /* Меньший отступ */
-            }
-            nav a {
-                display: block;
-                margin: 0 0;
-                font-size: 1em; /* Увеличенный размер шрифта для удобства */
-                padding: 0;
-            }
-            .cta button {
-                padding: 12px 15px; /* Уменьшенная высота и ширина кнопки */
-                font-size: 0.9em; /* Уменьшенный размер шрифта */
-            }
-            .modal-content {
-            margin: auto;
-            display: block;
-            width: 100%;
-            padding-top: 20%
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <!-- Заголовок с фоном -->
@@ -353,56 +29,92 @@
 
         <!-- Первый этаж -->
         <div class="floor-section" id="floor1">
-            <h2>Первый этаж</h2>   
+            <h2>Первый этаж</h2>
             <div class="classroom image-right">
                 <img src="img/classroom1.1.jpg" 
-                    data-images="data_img/classroom1.1-1.jpg, data_img/classroom1.1-2.jpg, data_img/classroom1.1-3.jpg" 
-                    alt="Класс 1"
-                    class="gallery-image"
-                    onclick="openModal(this)">
+                     data-images="data_img/classroom1.1-1.jpg, data_img/classroom1.1-2.jpg, data_img/classroom1.1-3.jpg, data_img/classroom1.1-4.jpg, data_img/classroom1.1-5.jpg, data_img/classroom1.1-6.jpg" 
+                     alt="Класс 1"
+                     class="gallery-image"
+                     onclick="openModal(this)">
                 <div class="classroom-description">
-                    <h3>Класс 1: класс</h3>
-                    <p>описание</p>
+                    <h3>Среднее звено: школьные коридоры</h3>
+                    <p>Школьные коридоры среднего звена — это пространство, наполненное энергией и взаимодействием. Здесь учащиеся перестраиваются между уроками, обсуждают учебные материалы и общаются друг с другом. Коридоры украшены работами учеников, что создает атмосферу дружбы и сотрудничества. На стенах также висят информационные стенды, которые знакомят студентов с важными событиями и мероприятиями школы.</p>
                 </div>
             </div>
 
             <div class="classroom image-left">
                 <img src="img/classroom1.2.jpg" 
-                     data-images="data_img/classroom1.2-1.jpg, data_img/classroom1.2-2.jpg, data_img/classroom1.2-3.jpg" 
+                     data-images="data_img/classroom1.2-1.jpg, data_img/classroom1.2-2.jpg, data_img/classroom1.2-3.jpg, data_img/classroom1.2-4.jpg" 
                      alt="Класс 1"
                      class="gallery-image"
                      onclick="openModal(this)">
                 <div class="classroom-description">
-                    <h3>Класс 2: класс</h3>
-                    <p>описание</p>
+                    <h3>Среднее звено: Спортзал</h3>
+                    <p>Спортзал — это место, где ученики среднего звена могут проявить свои спортивные навыки и поддерживать активный образ жизни. Здесь проходят физкультурные занятия, командные игры и спортивные соревнования. Просторный зал, оборудованный всем необходимым для занятий, вдохновляет на достижения и укрепляет командный дух среди учащихся.</p>
+                </div>
+            </div>
+
+            <div class="classroom image-right">
+                <img src="img/classroom1.3.jpg" 
+                     data-images="data_img/classroom1.3-1.jpg, data_img/classroom1.3-2.jpg, data_img/classroom1.3-3.jpg" 
+                     alt="Класс 1"
+                     class="gallery-image"
+                     onclick="openModal(this)">
+                <div class="classroom-description">
+                    <h3>Начальное звено: школьные коридоры</h3>
+                    <p>Коридоры начального звена полны ярких красок и оживленной атмосферы. Здесь малыши с удовольствием общаются друг с другом, обмениваются впечатлениями и делятся новостями. Каждый уголок коридора наполнен весельем, а уютные уголки для чтения и игр предоставляют детям возможность отдохнуть между уроками.</p>
+                </div>
+            </div>
+
+            <div class="classroom image-left">
+                <img src="img/classroom1.4.jpg" 
+                     data-images="data_img/classroom1.4-1.jpg, data_img/classroom1.4-2.jpg" 
+                     alt="Класс 1"
+                     class="gallery-image"
+                     onclick="openModal(this)">
+                <div class="classroom-description">
+                    <h3>Начальное звено: Медпункт</h3>
+                    <p>Медпункт — это место, где заботятся о здоровье учеников. Здесь работает доброжелательный медицинский персонал, готовый оказать помощь в случае необходимости. Медпункт оборудован всем необходимым для оказания первой медицинской помощи и создания комфортных условий для восстановления детей после болезни.</p>
+                </div>
+            </div>
+
+            <div class="classroom image-right">
+                <img src="img/classroom1.5.jpg" 
+                     data-images="data_img/classroom1.5-1.jpg, data_img/classroom1.5-2.jpg" 
+                     alt="Класс 1"
+                     class="gallery-image"
+                     onclick="openModal(this)">
+                <div class="classroom-description">
+                    <h3>Среднее звено: Столовая</h3>
+                    <p>Столовая для учеников — это не только место для приема пищи, но и центр общения и взаимодействия. Здесь ученики могут отдохнуть, пообщаться со своими друзьями и зарядиться энергией для дальнейших занятий. Меню разнообразное и сбалансированное, удовлетворяющее потребности растущих организмов.</p>
                 </div>
             </div>
         </div>
 
         <!-- Второй этаж -->
         <div class="floor-section" id="floor2">
-            <h2>Второй этаж</h2>
-            <div class="classroom image-right">
+            <h2>Второй этаж</h2>   
+            <div class="classroom image-left">
                 <img src="img/classroom2.1.jpg" 
-                     data-images="data_img/classroom2.1-1.jpg, data_img/classroom2.1-2.jpg, data_img/classroom2.1-3.jpg" 
-                     alt="Класс 1"
-                     class="gallery-image"
-                     onclick="openModal(this)">
+                data-images="data_img/classroom2.1-1.jpg, data_img/classroom2.1-2.jpg, data_img/classroom2.1-3.jpg, data_img/classroom2.1-4.jpg, data_img/classroom2.1-5.jpg, data_img/classroom2.1-6.jpg" 
+                alt="Класс 1"
+                    class="gallery-image"
+                    onclick="openModal(this)">
                 <div class="classroom-description">
-                    <h3>Класс 3: класс</h3>
-                    <p>описание</p>
+                    <h3>Среднее звено: школьные коридоры</h3>
+                    <p>Второй этаж — это новый уровень возможностей для учащихся среднего звена. Школьные коридоры здесь широкие и светлые, с местами для отдыха и общения. Учащиеся могли бы погрузиться в обсуждения своих проектов и делиться идеями, проходя мимо стен, украшенных творческими работами и важными объявлениями.</p>
                 </div>
             </div>
 
-            <div class="classroom image-left">
+            <div class="classroom image-right">
                 <img src="img/classroom2.2.jpg" 
-                     data-images="data_img/classroom2.2-1.jpg, data_img/classroom2.2-2.jpg, data_img/classroom2.2-3.jpg" 
+                     data-images="data_img/classroom2.2-1.jpg, data_img/classroom2.2-2.jpg, data_img/classroom2.2-3.jpg, data_img/classroom2.2-4.jpg" 
                      alt="Класс 1"
                      class="gallery-image"
                      onclick="openModal(this)">
                 <div class="classroom-description">
-                    <h3>Класс 4: класс</h3>
-                    <p>описание</p>
+                    <h3>Начальное звено: школьные коридоры</h3>
+                    <p>Коридоры начального звена на втором этаже создают уютную атмосферу, где дети могут свободно перемещаться между классами. Задорные смехи, радостные возгласы и цветные рисунки на стенах делают эти коридоры поистине волшебными, приглашая малышей в мир знаний и открытий.</p>
                 </div>
             </div>
         </div>
@@ -410,27 +122,27 @@
         <!-- Третий этаж -->
         <div class="floor-section" id="floor3">
             <h2>Третий этаж</h2>
-            <div class="classroom image-right">
+            <div class="classroom image-left">
                 <img src="img/classroom3.1.jpg" 
-                     data-images="data_img/classroom3.1-1.jpg, data_img/classroom3.1-2.jpg, data_img/classroom3.1-3.jpg" 
+                     data-images="data_img/classroom3.1-1.jpg, data_img/classroom3.1-2.jpg, data_img/classroom3.1-3.jpg, data_img/classroom3.1-4.jpg, data_img/classroom3.1-5.jpg" 
                      alt="Класс 1"
                      class="gallery-image"
                      onclick="openModal(this)">
                 <div class="classroom-description">
-                    <h3>Класс 5: класс</h3>
-                    <p>описание</p>
+                    <h3>Среднее звено: школьные коридоры</h3>
+                    <p>На третьем этаже коридоры среднего звена напоминают о том, что путь к знаниям всегда интересен. Здесь учащиеся подготовятся к занятиям, обсуждают свои интересы и подготавливаются к экзаменам. Пространство наполнено активностью и креативностью, что вдохновляет учеников на учебные достижения.</p>
                 </div>
             </div>
 
-            <div class="classroom image-left">
+            <div class="classroom image-right">
                 <img src="img/classroom3.2.jpg" 
-                     data-images="data_img/classroom3.2-1.jpg, data_img/classroom3.2-2.jpg, data_img/classroom3.2-3.jpg" 
+                     data-images="data_img/classroom3.2-1.jpg, data_img/classroom3.2-2.jpg, data_img/classroom3.2-3.jpg, data_img/classroom3.2-4.jpg, data_img/classroom3.2-5.jpg" 
                      alt="Класс 1"
                      class="gallery-image"
                      onclick="openModal(this)">
                 <div class="classroom-description">
-                    <h3>Класс 6: класс</h3>
-                    <p>описание</p>
+                    <h3>Начальное звено: школьные коридоры</h3>
+                    <p>Коридоры начального звена на третьем этаже создают атмосферу веселья и уюта. Здесь дети могут наслаждаться общением со сверстниками, обмениваясь впечатлениями и играми. Яркие стенды с работами малышей добавляют праздничности и подчеркивают уникальность каждого школьного дня.</p>
                 </div>
             </div>
         </div>
@@ -455,54 +167,6 @@
             <button class="next" onclick="nextImage()">&#10095;</button>
         </div>
     </div>
-    <script>
-        // Скрипт для прокрутки с отступом для фиксированного меню
-        document.querySelectorAll('nav a').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href').substring(1);
-                const targetElement = document.getElementById(targetId);
-    
-                // Проверка существования элемента перед прокруткой
-                if (targetElement) {
-                    // Прокрутка с учётом отступа
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 60, // Здесь отступ на 60 пикселей
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-
-        let currentImages = [];
-        let currentIndex = 0;
-
-        // Открыть модальное окно
-        function openModal(element) {
-            currentImages = element.getAttribute('data-images').split(', ');
-            currentIndex = 0;
-            
-            document.getElementById("modal").style.display = "block";
-            document.getElementById("modal-image").src = currentImages[currentIndex];
-        }
-
-        // Закрыть модальное окно
-        function closeModal() {
-            document.getElementById("modal").style.display = "none";
-        }
-
-        // Показать следующее изображение
-        function nextImage() {
-            currentIndex = (currentIndex + 1) % currentImages.length;
-            document.getElementById("modal-image").src = currentImages[currentIndex];
-        }
-
-        // Показать предыдущее изображение
-        function prevImage() {
-            currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
-            document.getElementById("modal-image").src = currentImages[currentIndex];
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
-
